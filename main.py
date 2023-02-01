@@ -526,6 +526,7 @@ def robbery():
     falseGrave.set_position(-400, -400)
     controller.move_sprite(jan, 100, 100)
     
+    
 # checks if player is interacting with graves, ultimately triggering the robbery function 
 def testOverlap():
     if controller.B.is_pressed() and jan.overlaps_with(falseGrave):
