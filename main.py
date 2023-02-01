@@ -263,6 +263,7 @@ jan = sprites.create(img("""
         . . . . . f f . . f f . . . . .
     """), SpriteKind.player)
 
+# places the following in a function for easy access later
 def playthrough():
     scene.set_background_image(img("""
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -395,8 +396,8 @@ def testOverlap():
     if controller.B.is_pressed() and jan.overlaps_with(falseGrave):
         game.show_long_text("This grave doesn't seem promising. Keep looking.", DialogLayout.TOP)
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
-        game.show_long_text("The headstone reads ", DialogLayout.TOP)
-
+        game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
+        game.show_long_text("Jan is interested in robbing it.", DialogLayout.BOTTOM)
 
 playthrough()
 

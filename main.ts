@@ -261,6 +261,7 @@ let jan = sprites.create(img`
         . . . . . f f f f f f . . . . .
         . . . . . f f . . f f . . . . .
     `, SpriteKind.Player)
+//  places the following in a function for easy access later
 function playthrough() {
     scene.setBackgroundImage(img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -391,7 +392,8 @@ function playthrough() {
         if (controller.B.isPressed() && jan.overlapsWith(falseGrave)) {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
-            game.showLongText("The headstone reads ", DialogLayout.Top)
+            game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
+            game.showLongText("Jan is interested in robbing it.", DialogLayout.Bottom)
         }
         
     })
