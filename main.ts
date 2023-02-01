@@ -256,8 +256,8 @@ let jan = sprites.create(img`
     ..feeddddddeef..
     ...feebbbbeef...
     ..ffffffffffff..
-    ..bff8888888ff..
-    ..dbff88888fbb..
+    ..fff8888888ff..
+    ..bbff88888fbb..
     ..dd.f8888f.dd..
     .....ffffff.....
     .....ffffff.....
