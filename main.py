@@ -397,7 +397,7 @@ def testOverlap():
         game.show_long_text("This grave doesn't seem promising. Keep looking.", DialogLayout.TOP)
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
-        game.show_long_text("Jan is interested in robbing it.", DialogLayout.BOTTOM)
+        game.show_long_text("Jan is interested in robbing it.", DialogLayout.TOP)
 
 playthrough()
 

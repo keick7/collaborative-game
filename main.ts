@@ -393,7 +393,7 @@ function playthrough() {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
-            game.showLongText("Jan is interested in robbing it.", DialogLayout.Bottom)
+            game.showLongText("Jan is interested in robbing it.", DialogLayout.Top)
         }
         
     })
