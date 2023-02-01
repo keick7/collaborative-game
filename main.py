@@ -532,11 +532,16 @@ def testOverlap():
         game.show_long_text("This grave doesn't seem promising. Keep looking.", DialogLayout.TOP)
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
-        game.show_long_text("Jan is interested in robbing it.", DialogLayout.TOP)
+        game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
         robbery()
 
 playthrough()
 
+
+# preparing the various endings
+def postRobbery():
+    # score = info.player1.score()
+    pass
 
 # Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe 
 # outline functions - main thing- playthrough?, robbery - minigame, bronzeSilver - fail, gold - win

@@ -399,7 +399,7 @@ function playthrough() {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
-            game.showLongText("Jan is interested in robbing it.", DialogLayout.Top)
+            game.showLongText("Jan prepares to dig.", DialogLayout.Top)
             robbery()
         }
         
@@ -537,3 +537,9 @@ function robbery() {
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
 playthrough()
+//  preparing the various endings
+function postRobbery() {
+    //  score = info.player1.score()
+    
+}
+
