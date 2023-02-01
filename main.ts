@@ -389,7 +389,7 @@ function playthrough() {
     jan.setStayInScreen(true)
     controller.moveSprite(jan, 100, 0)
     game.showLongText("Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe.", DialogLayout.Top)
-    game.showLongText("He is ready to begin work, press 'X' to interact with graves.", DialogLayout.Top)
+    game.showLongText("He is ready to begin work, press 'B' to interact with graves.", DialogLayout.Top)
     game.onUpdate(function testOverlap() {
         if (controller.B.isPressed() && jan.overlapsWith(falseGrave)) {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)

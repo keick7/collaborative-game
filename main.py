@@ -391,11 +391,12 @@ def playthrough():
     jan.set_stay_in_screen(True)
     controller.move_sprite(jan, 100, 0)
     game.show_long_text("Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe.", DialogLayout.TOP)
-    game.show_long_text("He is ready to begin work, press 'X' to interact with graves.", DialogLayout.TOP)
+    game.show_long_text("He is ready to begin work, press 'B' to interact with graves.", DialogLayout.TOP)
     game.on_update(testOverlap)
 
 # defines robbery minigame
 def robbery():
+    
     pass
     
 # checks if player is interacting with graves, ultimately triggering the robbery function 
