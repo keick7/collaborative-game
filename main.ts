@@ -399,9 +399,11 @@ function playthrough() {
     })
 }
 
+//  defines robbery minigame
 function robbery() {
     
 }
 
+//  checks if player is interacting with graves, ultimately triggering the robbery function 
 // robbery()
 playthrough()

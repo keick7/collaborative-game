@@ -392,9 +392,11 @@ def playthrough():
     controller.move_sprite(jan, 100, 0)
     game.on_update(testOverlap)
 
+# defines robbery minigame
 def robbery():
     pass
     
+# checks if player is interacting with graves, ultimately triggering the robbery function 
 def testOverlap():
     if controller.B.is_pressed() and jan.overlaps_with(falseGrave):
         game.show_long_text("This grave doesn't seem promising. Keep looking.", DialogLayout.TOP)
