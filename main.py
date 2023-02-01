@@ -391,6 +391,9 @@ def playthrough():
     jan.set_stay_in_screen(True)
     controller.move_sprite(jan, 100, 0)
     game.on_update(testOverlap)
+
+def robbery():
+    pass
     
 def testOverlap():
     if controller.B.is_pressed() and jan.overlaps_with(falseGrave):
@@ -398,8 +401,10 @@ def testOverlap():
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
         game.show_long_text("Jan is interested in robbing it.", DialogLayout.TOP)
+        #robbery()
 
 playthrough()
+
 
 # Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe 
 # outline functions - main thing- playthrough?, robbery - minigame, bronzeSilver - fail, gold - win
