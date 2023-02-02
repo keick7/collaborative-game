@@ -244,23 +244,23 @@ let realGrave = sprites.create(img`
     ................................................................................................................................................................
 `, SpriteKind.Player)
 let jan = sprites.create(img`
-        . . . . . . f f f f . . . . . .
-        . . . . f f f 2 2 f f f . . . .
-        . . . f f f 2 2 2 2 f f f . . .
-        . . f f f e e e e e e f f f . .
-        . . f f e 2 2 2 2 2 2 e e f . .
-        . . f e 2 f f f f f f 2 e f . .
-        . . f f f f e e e e f f f f . .
-        . f f e f b f 4 4 f b f e f f .
-        . f e e 4 1 f d d f 1 4 e e f .
-        . . f e e d d d d d d e e f . .
-        . . . f e e 4 4 4 4 e e f . . .
-        . . e 4 f 2 2 2 2 2 2 f 4 e . .
-        . . 4 d f 2 2 2 2 2 2 f d 4 . .
-        . . 4 4 f 4 4 5 5 4 4 f 4 4 . .
-        . . . . . f f f f f f . . . . .
-        . . . . . f f . . f f . . . . .
-    `, SpriteKind.Player)
+    . . . . . . f f f f . . . . . .
+    . . . . f f f 2 2 f f f . . . .
+    . . . f f f 2 2 2 2 f f f . . .
+    . . f f f e e e e e e f f f . .
+    . . f f e 2 2 2 2 2 2 e e f . .
+    . . f e 2 f f f f f f 2 e f . .
+    . . f f f f e e e e f f f f . .
+    . f f e f b f 4 4 f b f e f f .
+    . f e e 4 1 f d d f 1 4 e e f .
+    . . f e e d d d d d d e e f . .
+    . . . f e e 4 4 4 4 e e f . . .
+    . . e 4 f 2 2 2 2 2 2 f 4 e . .
+    . . 4 d f 2 2 2 2 2 2 f d 4 . .
+    . . 4 4 f 4 4 5 5 4 4 f 4 4 . .
+    . . . . . f f f f f f . . . . .
+    . . . . . f f . . f f . . . . .
+`, SpriteKind.Player)
 //  places the following in a function for easy access later
 function playthrough() {
     scene.setBackgroundImage(img`
@@ -391,11 +391,13 @@ function playthrough() {
     game.showLongText("Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe.", DialogLayout.Top)
     game.showLongText("He is ready to begin work, press 'B' to interact with graves.", DialogLayout.Top)
     game.onUpdate(function testOverlap() {
+        let minigame: boolean;
         if (controller.B.isPressed() && jan.overlapsWith(falseGrave)) {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
             game.showLongText("Jan is interested in robbing it.", DialogLayout.Top)
+            minigame = true
         }
         
     })
@@ -403,9 +405,33 @@ function playthrough() {
 
 //  defines robbery minigame
 function robbery() {
-    
+    scene.setBackgroundImage(img`
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+        f f f f f f f f f f f f f f f f
+    `)
+    jan.setPosition(50, 100)
 }
 
-//  checks if player is interacting with graves, ultimately triggering the robbery function 
+// checks if player is interacting with graves, ultimately triggering the robbery function 
+// triggers minigame
 // robbery()
+let minigame = false
 playthrough()
+if (minigame) {
+    robbery()
+}
+
