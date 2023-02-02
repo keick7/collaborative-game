@@ -536,6 +536,7 @@ def testOverlap():
         game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
         robbery()
 
+
 playthrough()
 
 
