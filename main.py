@@ -267,6 +267,9 @@ jan = sprites.create(img("""
     ................
 """), SpriteKind.player)
 
+monster = None
+projectile: Sprite = None
+
 # places the following in a function for easy access later
 def playthrough():
     scene.set_background_image(img("""
@@ -524,8 +527,50 @@ def robbery():
     """))
     realGrave.set_position(-400, -400)
     falseGrave.set_position(-400, -400)
-    controller.move_sprite(jan, 100, 100)
+    controller.move_sprite(jan, 120, 120)
     
+    #press a to attack while minigame is being played
+    def on_a_pressed():
+        #vx > 0 -> player facing right, vx < 0 -> player facing left
+        if  jan.vx > 0:
+            projectile = sprites.create_projectile_from_sprite(img("""
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . 2 2 . . . . . . .
+            . . . . . . 3 1 1 3 . . . . . .
+            . . . . . 2 1 1 1 1 2 . . . . .
+            . . . . . 2 1 1 1 1 2 . . . . .
+            . . . . . . 3 1 1 3 . . . . . .
+            . . . . . . . 2 2 . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            """), jan, 300, 0)
+        if jan.vx < 0:
+            projectile = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . 2 2 . . . . . . .
+                . . . . . . 3 1 1 3 . . . . . .
+                . . . . . 2 1 1 1 1 2 . . . . .
+                . . . . . 2 1 1 1 1 2 . . . . .
+                . . . . . . 3 1 1 3 . . . . . .
+                . . . . . . . 2 2 . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+            """), jan, -300, 0)
+    controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
     
 # checks if player is interacting with graves, ultimately triggering the robbery function 
 def testOverlap():
@@ -536,9 +581,8 @@ def testOverlap():
         game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
         robbery()
 
-
+#start
 playthrough()
-
 
 # preparing the various endings
 def postRobbery():

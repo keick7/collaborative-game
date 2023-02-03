@@ -265,6 +265,8 @@ let jan = sprites.create(img`
     .....cc..cc.....
     ................
 `, SpriteKind.Player)
+let monster = null
+let projectile : Sprite = null
 //  places the following in a function for easy access later
 function playthrough() {
     scene.setBackgroundImage(img`
@@ -532,10 +534,58 @@ function robbery() {
     `)
     realGrave.setPosition(-400, -400)
     falseGrave.setPosition(-400, -400)
-    controller.moveSprite(jan, 100, 100)
+    controller.moveSprite(jan, 120, 120)
+    // press a to attack while minigame is being played
+    controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
+        let projectile: Sprite;
+        // vx > 0 -> player facing right, vx < 0 -> player facing left
+        if (jan.vx > 0) {
+            projectile = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . 2 2 . . . . . . .
+            . . . . . . 3 1 1 3 . . . . . .
+            . . . . . 2 1 1 1 1 2 . . . . .
+            . . . . . 2 1 1 1 1 2 . . . . .
+            . . . . . . 3 1 1 3 . . . . . .
+            . . . . . . . 2 2 . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            `, jan, 300, 0)
+        }
+        
+        if (jan.vx < 0) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . 2 2 . . . . . . .
+                . . . . . . 3 1 1 3 . . . . . .
+                . . . . . 2 1 1 1 1 2 . . . . .
+                . . . . . 2 1 1 1 1 2 . . . . .
+                . . . . . . 3 1 1 3 . . . . . .
+                . . . . . . . 2 2 . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+            `, jan, -300, 0)
+        }
+        
+    })
 }
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
+// start
 playthrough()
 //  preparing the various endings
 function postRobbery() {
