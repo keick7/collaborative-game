@@ -268,6 +268,10 @@ let jan = sprites.create(img`
 let monster = null
 let monster2 = null
 let projectile : Sprite = null
+let bronze = "bronze"
+let silver = "silver"
+let gold = "gold"
+let recipe = bronze
 //  places the following in a function for easy access later
 function playthrough() {
     scene.setBackgroundImage(img`
@@ -398,12 +402,18 @@ function playthrough() {
     game.showLongText("Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe.", DialogLayout.Top)
     game.showLongText("He is ready to begin work, press 'B' to interact with graves.", DialogLayout.Top)
     game.onUpdate(function testOverlap() {
+        let minigame: boolean;
         if (controller.B.isPressed() && jan.overlapsWith(falseGrave)) {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
             game.showLongText("Jan prepares to dig.", DialogLayout.Top)
-            robbery()
+            minigame = true
+            // game keeps running until you get gold recipe
+            // while loop
+            while (recipe != gold) {
+                robbery()
+            }
         }
         
     })
@@ -411,6 +421,7 @@ function playthrough() {
 
 //  defines robbery minigame
 function robbery() {
+    let recipe: string;
     scene.setBackgroundImage(img`
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -537,8 +548,9 @@ function robbery() {
     falseGrave.setPosition(-400, -400)
     info.setScore(0)
     info.startCountdown(10)
-    controller.moveSprite(jan, 120, 120)
+    controller.moveSprite(jan, 120, 150)
     game.onUpdateInterval(500, function on_update_interval() {
+        // monster is spawned from the right and monster2 is spawned from the left
         let monster = sprites.create(img`
             ........................
             ........................
@@ -564,7 +576,7 @@ function robbery() {
             ........................
             ........................
             ........................
-        `, SpriteKind.Player)
+        `, SpriteKind.Enemy)
         monster.setPosition(160, randint(0, 120))
         monster.setVelocity(-80, 0)
         let monster2 = sprites.create(img`
@@ -592,11 +604,11 @@ function robbery() {
             ........................
             ........................
             ........................
-        `, SpriteKind.Player)
+        `, SpriteKind.Enemy)
         monster2.setPosition(0, randint(0, 120))
         monster2.setVelocity(80, 0)
     })
-    // press a to attack while minigame is being played
+    // press a to attack 
     controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
         let projectile: Sprite;
         // vx > 0 -> player facing right, vx < 0 -> player facing left
@@ -643,22 +655,39 @@ function robbery() {
         }
         
     })
+    // add to score when enemy is killed
     sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function on_on_overlap(projectile: Sprite, monster: Sprite) {
         info.changeScoreBy(1)
         sprites.destroy(projectile)
         monster.destroy(effects.fire, 100)
     })
+    //  preparing the various endings
+    if (info.highScore() <= 3 && info.highScore() > 0) {
+        recipe = bronze
+    }
+    
+    if (info.highScore() >= 3 && info.highScore() <= 6) {
+        recipe = silver
+    }
+    
+    if (info.highScore() > 6) {
+        recipe = gold
+    }
+    
+    // return function
+    function postRobbery(recipe: string): string {
+        return recipe
+    }
+    
+    postRobbery(recipe)
+    let result = postRobbery(recipe)
+    game.splash(result)
 }
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
 // start
+let minigame = false
 playthrough()
-//  preparing the various endings
-function postRobbery() {
-    //  score = info.player1.score()
-    
-}
-
 //  Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe 
 //  outline functions - main thing- playthrough?, robbery - minigame, bronzeSilver - fail, gold - win
 /** scene.set_background_image(img("""

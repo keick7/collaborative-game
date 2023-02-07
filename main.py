@@ -271,6 +271,11 @@ monster = None
 monster2 = None
 projectile: Sprite = None
 
+bronze = "bronze"
+silver = "silver"
+gold = "gold"
+recipe = bronze
+
 # places the following in a function for easy access later
 def playthrough():
     scene.set_background_image(img("""
@@ -530,9 +535,10 @@ def robbery():
     falseGrave.set_position(-400, -400)
     info.set_score(0)
     info.start_countdown(10)
-    controller.move_sprite(jan, 120, 120)
+    controller.move_sprite(jan, 120, 150)
 
     def on_update_interval():
+        #monster is spawned from the right and monster2 is spawned from the left
         monster = sprites.create(img("""
             ........................
             ........................
@@ -558,7 +564,7 @@ def robbery():
             ........................
             ........................
             ........................
-        """), SpriteKind.player)
+        """), SpriteKind.enemy)
         monster.set_position(160, randint(0, 120))
         monster.set_velocity(-80, 0)
         monster2 = sprites.create(img("""
@@ -586,12 +592,12 @@ def robbery():
             ........................
             ........................
             ........................
-        """), SpriteKind.player)
+        """), SpriteKind.enemy)
         monster2.set_position(0, randint(0, 120))
         monster2.set_velocity(80, 0)
     game.on_update_interval(500, on_update_interval)
 
-    #press a to attack while minigame is being played
+    #press a to attack 
     def on_a_pressed():
         #vx > 0 -> player facing right, vx < 0 -> player facing left
         if  jan.vx > 0:
@@ -633,12 +639,33 @@ def robbery():
                 . . . . . . . . . . . . . . . .
             """), jan, -300, 0)
     controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
-
+    #add to score when enemy is killed
     def on_on_overlap(projectile, monster):
         info.change_score_by(1)
         sprites.destroy(projectile)
         monster.destroy(effects.fire, 100)
     sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
+    def on_on_overlap(projectile, monster2):
+        info.change_score_by(1)
+        sprites.destroy(projectile)
+        monster2.destroy(effects.fire, 100)
+        sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
+
+    # preparing the various endings
+    if info.high_score() <= 3 and info.high_score() > 0:
+        recipe = bronze
+    if info.high_score() >= 3 and info.high_score() <= 6:
+        recipe = silver
+    if info.high_score() > 6:
+        recipe = gold
+    #return function
+    def postRobbery(recipe):
+        return recipe
+    postRobbery(recipe)
+    result = postRobbery(recipe)
+    game.splash(result)
+
+            
     
 # checks if player is interacting with graves, ultimately triggering the robbery function 
 def testOverlap():
@@ -647,15 +674,23 @@ def testOverlap():
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
         game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
-        robbery()
+        minigame = True
+        #game keeps running until you get gold recipe
+        #while loop
+        while recipe != gold:
+            robbery()
 
 #start
+
+minigame = False
+
 playthrough()
 
-# preparing the various endings
-def postRobbery():
-    # score = info.player1.score()
-    pass
+
+
+
+
+
 
 # Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe 
 # outline functions - main thing- playthrough?, robbery - minigame, bronzeSilver - fail, gold - win
