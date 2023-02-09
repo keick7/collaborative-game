@@ -415,7 +415,7 @@ def playthrough():
     if not minigame:
         def on_after():
             game.splash("Keep looking.")
-        timer.after(10000, on_after)
+        timer.after(20000, on_after)
 
 # defines robbery minigame
 def robbery():

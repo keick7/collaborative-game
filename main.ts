@@ -417,7 +417,7 @@ function playthrough() {
     // if player hasn't found the realGrave for 10 seconds
     // timer extension
     if (!minigame) {
-        timer.after(10000, function on_after() {
+        timer.after(20000, function on_after() {
             game.splash("Keep looking.")
         })
     }
