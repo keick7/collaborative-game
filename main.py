@@ -536,6 +536,7 @@ def robbery():
     info.set_score(0)
     info.start_countdown(10)
     controller.move_sprite(jan, 120, 150)
+    
 
     def on_update_interval():
         #monster is spawned from the right and monster2 is spawned from the left
@@ -651,19 +652,27 @@ def robbery():
         monster2.destroy(effects.fire, 100)
         sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
 
-    # preparing the various endings
+    #return function
+    def postRobbery(recipe):
+        return recipe
+    
+    # preparing the various endings 
+    info.save_high_score()
     if info.high_score() <= 3 and info.high_score() > 0:
         recipe = bronze
     if info.high_score() >= 3 and info.high_score() <= 6:
         recipe = silver
     if info.high_score() > 6:
         recipe = gold
-    #return function
-    def postRobbery(recipe):
-        return recipe
     postRobbery(recipe)
     result = postRobbery(recipe)
     game.splash(result)
+    
+
+    
+
+    
+
 
             
     
@@ -675,15 +684,13 @@ def testOverlap():
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
         game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
         minigame = True
+        robbery()
         #game keeps running until you get gold recipe
         #while loop
-        while recipe != gold:
-            robbery()
+        
 
 #start
-
 minigame = False
-
 playthrough()
 
 

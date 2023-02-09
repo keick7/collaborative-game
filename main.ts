@@ -409,11 +409,7 @@ function playthrough() {
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
             game.showLongText("Jan prepares to dig.", DialogLayout.Top)
             minigame = true
-            // game keeps running until you get gold recipe
-            // while loop
-            while (recipe != gold) {
-                robbery()
-            }
+            robbery()
         }
         
     })
@@ -661,7 +657,13 @@ function robbery() {
         sprites.destroy(projectile)
         monster.destroy(effects.fire, 100)
     })
-    //  preparing the various endings
+    // return function
+    function postRobbery(recipe: string): string {
+        return recipe
+    }
+    
+    //  preparing the various endings 
+    info.saveHighScore()
     if (info.highScore() <= 3 && info.highScore() > 0) {
         recipe = bronze
     }
@@ -674,17 +676,14 @@ function robbery() {
         recipe = gold
     }
     
-    // return function
-    function postRobbery(recipe: string): string {
-        return recipe
-    }
-    
     postRobbery(recipe)
     let result = postRobbery(recipe)
     game.splash(result)
 }
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
+// game keeps running until you get gold recipe
+// while loop
 // start
 let minigame = false
 playthrough()
