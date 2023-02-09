@@ -2,7 +2,12 @@
     "name": "collaborative game",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "controller": "*",
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "animation": "*",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2",
+        "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2"
     },
     "files": [
         "main.blocks",

@@ -271,6 +271,7 @@ let projectile : Sprite = null
 let bronze = "bronze"
 let silver = "silver"
 let gold = "gold"
+let fail = "0"
 let recipe = bronze
 //  places the following in a function for easy access later
 function playthrough() {
@@ -406,13 +407,21 @@ function playthrough() {
         if (controller.B.isPressed() && jan.overlapsWith(falseGrave)) {
             game.showLongText("This grave doesn't seem promising. Keep looking.", DialogLayout.Top)
         } else if (controller.B.isPressed() && jan.overlapsWith(realGrave)) {
+            minigame = true
             game.showLongText("The headstone belongs to a famous chef!", DialogLayout.Top)
             game.showLongText("Jan prepares to dig.", DialogLayout.Top)
-            minigame = true
             robbery()
         }
         
     })
+    // if player hasn't found the realGrave for 10 seconds
+    // timer extension
+    if (!minigame) {
+        timer.after(10000, function on_after() {
+            game.splash("Keep looking.")
+        })
+    }
+    
 }
 
 //  defines robbery minigame
@@ -680,6 +689,10 @@ function robbery() {
             win = true
         }
         
+        if (info.score() < 1) {
+            recipe = fail
+        }
+        
         postRobbery(recipe)
         let result = postRobbery(recipe)
         game.splash(result)
@@ -696,11 +709,10 @@ function robbery() {
 }
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
-// game keeps running until you get gold recipe
-// while loop
 // start
 let minigame = false
 playthrough()
+// extension used = timer
 //  Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe 
 //  outline functions - main thing- playthrough?, robbery - minigame, bronzeSilver - fail, gold - win
 /** scene.set_background_image(img("""

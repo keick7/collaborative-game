@@ -274,7 +274,10 @@ projectile: Sprite = None
 bronze = "bronze"
 silver = "silver"
 gold = "gold"
+fail = "0"
 recipe = bronze
+
+
 
 # places the following in a function for easy access later
 def playthrough():
@@ -406,6 +409,13 @@ def playthrough():
     game.show_long_text("Jan is an argumentative man from the grave diggers union who is searching for the perfect culinary recipe.", DialogLayout.TOP)
     game.show_long_text("He is ready to begin work, press 'B' to interact with graves.", DialogLayout.TOP)
     game.on_update(testOverlap)
+
+    #if player hasn't found the realGrave for 10 seconds
+    #timer extension
+    if not minigame:
+        def on_after():
+            game.splash("Keep looking.")
+        timer.after(10000, on_after)
 
 # defines robbery minigame
 def robbery():
@@ -669,6 +679,8 @@ def robbery():
             recipe = gold
             #boolean
             win = True
+        if info.score() < 1:
+            recipe = fail
         postRobbery(recipe)
         result = postRobbery(recipe)
         game.splash(result)
@@ -688,17 +700,22 @@ def testOverlap():
     if controller.B.is_pressed() and jan.overlaps_with(falseGrave):
         game.show_long_text("This grave doesn't seem promising. Keep looking.", DialogLayout.TOP)
     elif controller.B.is_pressed() and jan.overlaps_with(realGrave):
+        minigame = True
         game.show_long_text("The headstone belongs to a famous chef!", DialogLayout.TOP)
         game.show_long_text("Jan prepares to dig.", DialogLayout.TOP)
-        minigame = True
         robbery()
-        #game keeps running until you get gold recipe
-        #while loop
+        
         
 
 #start
 minigame = False
 playthrough()
+
+
+#extension used = timer
+
+
+
 
 
 
