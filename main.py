@@ -652,29 +652,36 @@ def robbery():
         monster2.destroy(effects.fire, 100)
         sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
 
-    #return function
-    def postRobbery(recipe):
-        return recipe
+
     
     # preparing the various endings 
-    info.save_high_score()
-    if info.high_score() <= 3 and info.high_score() > 0:
-        recipe = bronze
-    if info.high_score() >= 3 and info.high_score() <= 6:
-        recipe = silver
-    if info.high_score() > 6:
-        recipe = gold
-    postRobbery(recipe)
-    result = postRobbery(recipe)
-    game.splash(result)
-    
 
-    
+    #return function
+    def postRobbery(recipe):
+            return recipe
+    def on_countdown_end():
+        #show result
+        if  info.score() <= 3 and info.score() > 0:
+            recipe = bronze
+        if info.score() >= 3 and info.score() <= 6:
+            recipe = silver
+        if info.score() > 6:
+            recipe = gold
+            #boolean
+            win = True
+        postRobbery(recipe)
+        result = postRobbery(recipe)
+        game.splash(result)
+        #keep running the game until player gets gold recipe
+        #while loop
+        while recipe != gold:
+            game.reset()
+        
+        if win:
+            game.game_over(True)
+    info.on_countdown_end(on_countdown_end)
 
-    
 
-
-            
     
 # checks if player is interacting with graves, ultimately triggering the robbery function 
 def testOverlap():

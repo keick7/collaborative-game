@@ -417,7 +417,6 @@ function playthrough() {
 
 //  defines robbery minigame
 function robbery() {
-    let recipe: string;
     scene.setBackgroundImage(img`
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -657,28 +656,43 @@ function robbery() {
         sprites.destroy(projectile)
         monster.destroy(effects.fire, 100)
     })
+    //  preparing the various endings 
     // return function
     function postRobbery(recipe: string): string {
         return recipe
     }
     
-    //  preparing the various endings 
-    info.saveHighScore()
-    if (info.highScore() <= 3 && info.highScore() > 0) {
-        recipe = bronze
-    }
-    
-    if (info.highScore() >= 3 && info.highScore() <= 6) {
-        recipe = silver
-    }
-    
-    if (info.highScore() > 6) {
-        recipe = gold
-    }
-    
-    postRobbery(recipe)
-    let result = postRobbery(recipe)
-    game.splash(result)
+    info.onCountdownEnd(function on_countdown_end() {
+        let recipe: string;
+        let win: boolean;
+        // show result
+        if (info.score() <= 3 && info.score() > 0) {
+            recipe = bronze
+        }
+        
+        if (info.score() >= 3 && info.score() <= 6) {
+            recipe = silver
+        }
+        
+        if (info.score() > 6) {
+            recipe = gold
+            // boolean
+            win = true
+        }
+        
+        postRobbery(recipe)
+        let result = postRobbery(recipe)
+        game.splash(result)
+        // keep running the game until player gets gold recipe
+        // while loop
+        while (recipe != gold) {
+            game.reset()
+        }
+        if (win) {
+            game.gameOver(true)
+        }
+        
+    })
 }
 
 //  checks if player is interacting with graves, ultimately triggering the robbery function 
